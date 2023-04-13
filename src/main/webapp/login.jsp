@@ -1,10 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: 201540
-  Date: 4/11/2023
-  Time: 10:01 PM
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -29,7 +23,7 @@
             %>
             <div class="card-header text-center">User Login</div>
             <div class="card-body">
-                <form action="/login-servlet" method="post">
+                <form action="${pageContext.request.contextPath}/login-servlet" method="post">
 
                     <div class="form-group">
                         <label>Email Address</label>

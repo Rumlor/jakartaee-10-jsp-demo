@@ -3,13 +3,13 @@
              xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
              version="3.0">
     <persistence-unit name="firstcupPU" transaction-type="JTA">
-        <jta-data-source>java/webapp/mssql</jta-data-source>
+        <jta-data-source>java/webapp/mysql</jta-data-source>
         <class>com.example.webappdemo.entity.User</class>
         <properties>
             <property name="jakarta.persistence.schema-generation.database.action" value="create"/>
             <property name="jakarta.persistence.schema-generation.scripts.action" value="create"/>
             <property name="jakarta.persistence.schema-generation.create-database-schemas" value="true"/>
-            <property name="jakarta.persistence.schema-generation.scripts.create-target" value="C:\projects\web-app-demo\src\main\resources\META-INF\data\DDL.sql"/>
+            <property name="jakarta.persistence.schema-generation.scripts.create-target" value="C:\Users\Rumlor\IdeaProjects\jakartaee-10-jsp-demo\src\main\resources\META-INF\data\DDL.sql"/>
         </properties>
     </persistence-unit>
 </persistence>

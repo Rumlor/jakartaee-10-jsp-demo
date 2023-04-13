@@ -1,7 +1,7 @@
 package com.example.webappdemo;
 
 import com.example.webappdemo.entity.User;
-import com.example.webappdemo.service.DaoService;
+import com.example.webappdemo.service.UserDaoService;
 import jakarta.ejb.EJB;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -14,7 +14,7 @@ import java.io.IOException;
 public class LoginServlet extends HttpServlet {
 
     @EJB
-    private DaoService<User> userDaoService;
+    private UserDaoService userDaoService;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {

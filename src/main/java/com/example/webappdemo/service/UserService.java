@@ -8,7 +8,7 @@ import jakarta.transaction.Transactional;
 
 
 @Stateless
-public class UserService implements DaoService<User> {
+public class UserService implements UserDaoService {
 
     @PersistenceContext
     private EntityManager entityManager;
