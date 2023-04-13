@@ -18,17 +18,17 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
-        var mail = req.getParameter("email");
+        var username = req.getParameter("username");
         var pass = req.getParameter("password");
-        User user = userDaoService.runQuery(mail,pass);
+        User user = userDaoService.runQuery(username,pass);
         try {
             if (user != null){
                 req.getSession().setAttribute("auth",user);
+                req.getSession().removeAttribute("error");
                 resp.sendRedirect("index.jsp");
             }
             else {
                 req.getSession().setAttribute("error",true);
-                resp.setStatus(401);
                 resp.sendRedirect("login.jsp");
             }
         } catch (IOException e) {

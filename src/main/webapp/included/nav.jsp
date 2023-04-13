@@ -9,18 +9,31 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="index.jsp">Home</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="cart.jsp">Cart</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="orders.jsp">Orders</a>
-        </li>
+        <%
+          if (session.getAttribute("auth") != null){
+            %>
+          <li class="nav-item">
+            <a class="nav-link" href="cart.jsp">Cart</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="orders.jsp">Orders</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="${pageContext.request.contextPath}/logout-servlet">Logout</a>
+          </li>
+        <%
+          }
+          else {
+        %>
         <li class="nav-item">
           <a class="nav-link" href="login.jsp">Login</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Logout</a>
-        </li>
+        <%}%>
+
+
+
       </ul>
       <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">

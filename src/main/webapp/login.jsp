@@ -15,9 +15,10 @@
                 if (result != null && result)
                 {
                     %>
-                    <div class="alert alert-danger" role="alert">
-                        Login Failed!
-                    </div>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>Login Failed!</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
                     <%
                 }
             %>
@@ -26,8 +27,8 @@
                 <form action="${pageContext.request.contextPath}/login-servlet" method="post">
 
                     <div class="form-group">
-                        <label>Email Address</label>
-                        <input type="email" class="form-control" name="email" required placeholder="Enter Email" >
+                        <label>Username</label>
+                            <input type="text" class="form-control" name="username" required placeholder="Enter username" >
                     </div>
 
                     <div class="form-group">
