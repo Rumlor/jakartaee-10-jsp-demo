@@ -7,6 +7,12 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
+<%
+    if (session.getAttribute("auth") == null){
+        RequestDispatcher dispatcher = pageContext.getServletContext().getRequestDispatcher(ServletPath.LOGIN);
+        dispatcher.forward(request,response);
+    }
+%>
 <head>
     <title>Cart</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">

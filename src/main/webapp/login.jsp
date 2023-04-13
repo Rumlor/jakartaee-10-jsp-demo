@@ -6,6 +6,12 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <script src="js/bootstrap.min.js"></script>
 </head>
+<%
+    if (session.getAttribute("auth") != null) {
+        RequestDispatcher dispatcher = pageContext.getServletContext().getRequestDispatcher(ServletPath.INDEX);
+        dispatcher.forward(request,response);
+    }
+%>
 <body>
 <%@include file="included/nav.jsp"%>
     <div class="container">
@@ -24,7 +30,7 @@
             %>
             <div class="card-header text-center">User Login</div>
             <div class="card-body">
-                <form action="${pageContext.request.contextPath}/login-servlet" method="post">
+                <form action="${pageContext.request.contextPath}/auth/login" method="post">
 
                     <div class="form-group">
                         <label>Username</label>
