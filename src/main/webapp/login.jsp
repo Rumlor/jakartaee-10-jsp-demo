@@ -14,12 +14,12 @@
                 Boolean result = (Boolean) session.getAttribute("error");
                 if (result != null && result)
                 {
-            %>
-            <div class="alert alert-danger" role="alert">
-                Login Failed!
-            </div>
-
-            <% }
+                    %>
+                    <div class="alert alert-danger" role="alert">
+                        Login Failed!
+                    </div>
+                    <%
+                }
             %>
             <div class="card-header text-center">User Login</div>
             <div class="card-body">

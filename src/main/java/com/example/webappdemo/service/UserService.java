@@ -21,7 +21,8 @@ public class UserService implements UserDaoService {
         try {
         user =  entityManager.createQuery("select u from User u where u.email= :mail and u.password = :pass", User.class)
                     .setParameter("mail", mail)
-                    .setParameter("pass", pass).getSingleResult();
+                    .setParameter("pass", pass)
+                    .getSingleResult();
         } catch (Exception e){
             e.printStackTrace();
         }
