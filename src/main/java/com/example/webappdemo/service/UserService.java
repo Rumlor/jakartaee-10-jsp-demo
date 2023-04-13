@@ -15,12 +15,12 @@ public class UserService implements UserDaoService {
 
     @Override
     @Transactional
-    public User runQuery(String mail, String pass) {
+    public User runQuery(String username, String pass) {
         User user = null;
 
         try {
-        user =  entityManager.createQuery("select u from User u where u.email= :mail and u.password = :pass", User.class)
-                    .setParameter("mail", mail)
+        user =  entityManager.createQuery("select u from User u where u.userName= :username and u.password = :pass", User.class)
+                    .setParameter("username", username)
                     .setParameter("pass", pass)
                     .getSingleResult();
         } catch (Exception e){
