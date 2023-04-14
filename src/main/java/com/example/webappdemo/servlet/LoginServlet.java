@@ -4,14 +4,12 @@ import com.example.webappdemo.entity.User;
 import com.example.webappdemo.service.UserService;
 import jakarta.ejb.EJB;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
 
 @WebServlet(name = "loginServlet", urlPatterns = {"/auth/login","/auth/logout"})
-public class LoginServlet extends HttpServlet {
+public class LoginServlet extends ServletBase {
 
     @EJB
     private UserService userDaoService;

@@ -4,7 +4,6 @@ import com.example.webappdemo.entity.User;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.transaction.Transactional;
 
 
 @Stateless
@@ -14,7 +13,6 @@ public class UserServiceImpl implements UserService {
     private EntityManager entityManager;
 
     @Override
-    @Transactional
     public User runQuery(String username, String pass) {
         User user = null;
 

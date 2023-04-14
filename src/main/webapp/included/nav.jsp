@@ -11,6 +11,7 @@
           <a class="nav-link active" aria-current="page" href=<%=ServletPath.INDEX%> >Home</a>
         </li>
         <%
+          ServletPath.setContextPath(request.getContextPath());
           if (session.getAttribute("auth") != null){
             %>
           <li class="nav-item">
