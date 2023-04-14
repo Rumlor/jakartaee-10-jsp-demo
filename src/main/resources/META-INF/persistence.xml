@@ -5,6 +5,7 @@
     <persistence-unit name="firstcupPU" transaction-type="JTA">
         <jta-data-source>java/webapp/mysql</jta-data-source>
         <class>com.example.webappdemo.entity.User</class>
+        <class>com.example.webappdemo.entity.Product</class>
         <properties>
             <property name="jakarta.persistence.schema-generation.database.action" value="create"/>
             <property name="jakarta.persistence.schema-generation.scripts.action" value="create"/>

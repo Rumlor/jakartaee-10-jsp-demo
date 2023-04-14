@@ -6,6 +6,8 @@ dependencies {
     compileOnly 'jakarta.transaction:jakarta.transaction-api:2.0.1'
     compileOnly 'jakarta.ejb:jakarta.ejb-api:4.0.0'
     compileOnly group: 'jakarta.servlet.jsp', name: 'jakarta.servlet.jsp-api', version: '3.1.0'
+
+    implementation group: 'taglibs', name: 'standard', version: '1.1.2'
     implementation group: 'com.mysql', name: 'mysql-connector-j', version: '8.0.32'
 
 }
