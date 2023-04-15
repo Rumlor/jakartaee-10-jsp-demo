@@ -30,7 +30,7 @@
             %>
             <div class="card-header text-center">User Login</div>
             <div class="card-body">
-                <form action="${pageContext.request.contextPath}/auth/login" method="post">
+                <form action = "${pageContext.servletContext.contextPath.concat("/auth/login")}" method="post">
 
                     <div class="form-group">
                         <label>Username</label>

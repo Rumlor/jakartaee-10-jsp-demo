@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "loginServlet", urlPatterns = {"/auth/login","/auth/logout"})
+@WebServlet(name = "loginServlet", urlPatterns = {ServletPath.AUTH_LOGIN,ServletPath.AUTH_LOGOUT})
 public class LoginServlet extends ServletBase {
 
     @EJB
@@ -35,11 +35,11 @@ public class LoginServlet extends ServletBase {
             if (user != null){
                 req.getSession().setAttribute("auth",user);
                 req.getSession().removeAttribute("error");
-                resp.sendRedirect(ServletPath.INDEX);
+                resp.sendRedirect(ServletPath.ROOT + req.getContextPath().concat(ServletPath.INDEX));
             }
             else {
                 req.getSession().setAttribute("error",true);
-                resp.sendRedirect(ServletPath.LOGIN);
+                resp.sendRedirect(ServletPath.ROOT + req.getContextPath().concat(ServletPath.LOGIN));
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -51,7 +51,7 @@ public class LoginServlet extends ServletBase {
             req.getSession().removeAttribute("auth");
         }
         try {
-            resp.sendRedirect(ServletPath.LOGIN);
+            resp.sendRedirect(ServletPath.ROOT + req.getContextPath().concat(ServletPath.LOGIN));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
