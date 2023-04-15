@@ -1,4 +1,8 @@
-<%--
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="com.example.webappdemo.model.CartModel" %>
+<%@ page import="java.math.BigDecimal" %>
+<%@ page import="com.example.webappdemo.model.ProductModel" %>
+<%@ page import="java.util.Optional" %><%--
   Created by IntelliJ IDEA.
   User: 201540
   Date: 4/11/2023
@@ -11,7 +15,10 @@
     if (session.getAttribute("auth") == null){
         response.sendRedirect(ServletPath.ROOT + request.getContextPath().concat(ServletPath.LOGIN));
     }
+    CartModel cartModel = (CartModel)session.getAttribute("cart");
+    session.setAttribute("cart",cartModel);
 %>
+
 <head>
     <title>Cart</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -24,7 +31,7 @@
 <h1>Cart Page</h1>
 <div class="container">
     <div class="d-flex py-3">
-        <h3>Total Price: $0</h3>
+        <h3>Total Price: $<%=getPrice(cartModel)%></h3>
         <a class="mx-3 btn btn-primary" href="#">Check Out</a>
 </div>
 
@@ -39,19 +46,25 @@
         </tr>
     </thead>
     <tbody>
-    <tr>
-        <td>Product 1</td>
-        <td>Shoes</td>
-        <td>$451</td>
-        <td>
-            <input type="button" value="-" class="button-minus border rounded-circle  icon-shape icon-sm mx-1" data-field="quantity" onclick="decrement()">
-            <input type="text" value="1" class="amount-input"/>
-            <input type="button" value="+" class="button-minus border rounded-circle  icon-shape icon-sm mx-1" data-field="quantity" onclick="increment()">
-        </td>
-        <td>
-            <a class="btn btn-sm btn-danger" href="#">Cancel</a>
-        </td>
-    </tr>
+
+        <c:forEach items="${cart.productModelList}" var="item">
+            <tr>
+                <td><c:out value="${item.name}"/></td>
+                <td><c:out value="${item.category}"/></td>
+                <td>
+                    <c:out value="\$${item.totalPrice}"/>
+                </td>
+                <td>
+                    <input type="button" value="-" class="button-minus border rounded-circle  icon-shape icon-sm mx-1 " data-field="quantity">
+                    <input type="text"  class= "amount-input" value="${item.count}">
+                    <input type="button" value="+" class="button-minus border rounded-circle  icon-shape icon-sm mx-1 " data-field="quantity">
+                </td>
+                <td>
+                    <a href="#" class="btn btn-close"></a>
+                </td>
+            </tr>
+        </c:forEach>
+
     </tbody>
 </table>
 
@@ -76,3 +89,11 @@
     }
 </script>
 </html>
+<%! private static BigDecimal getPrice(CartModel cartModel) {
+    return Optional.ofNullable(cartModel)
+            .map(cart->
+            cart.getProductModelList().stream()
+            .map(p->p.getPrice().multiply(BigDecimal.valueOf(p.getCount())))
+            .reduce(BigDecimal.ZERO,BigDecimal::add)).orElse(BigDecimal.ZERO);
+}
+%>

@@ -12,6 +12,28 @@
 <body>
 <%@include file="included/nav.jsp"%>
     <div class="container">
+        <%
+            String infoAttr = (String) session.getAttribute("info");
+            String errorAttr = (String) session.getAttribute("error");
+            if ( infoAttr != null && !infoAttr.isEmpty()) {
+        %>
+
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <strong><%=infoAttr%></strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+        <%
+            }
+            if(errorAttr != null && !errorAttr.isEmpty()){
+        %>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong><%=errorAttr%></strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <%
+            }
+        %>
         <div class="card-header my-3">All Products</div>
         <div class="row">
                 <c:forEach items="${productBean.allProducts}" var="product">
@@ -27,7 +49,7 @@
                                     if (session.getAttribute("auth") != null){
                                 %>
                                 <div class="mt-3 d-flex justify-content-between">
-                                    <a href=<%=ServletPath.ROOT + request.getServletPath().concat(ServletPath.CART_ADD).concat("?id=")%>${product.id} class="btn btn-dark ">Add To Cart</a>
+                                    <a href=<%=request.getServletContext().getContextPath().concat(ServletPath.CART_ADD).concat("?id=")%>${product.id} class="btn btn-dark ">Add To Cart</a>
                                     <a href="#" class="btn btn-primary ">Buy Now</a>
                                 </div>
                                 <% }
@@ -37,6 +59,10 @@
                     </div>
                 </c:forEach>
             </div>
+        <%
+            session.removeAttribute("error");
+            session.removeAttribute("info");
+        %>
     </div>
 </body>
 </html>

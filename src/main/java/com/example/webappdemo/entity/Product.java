@@ -12,7 +12,6 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 public class Product implements Serializable {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,4 +20,7 @@ public class Product implements Serializable {
     private String imagePath;
     private BigDecimal price;
     private Integer count;
+    public void decrementStock(){
+        count--;
+    }
 }

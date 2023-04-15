@@ -7,7 +7,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
 import java.util.List;
-import java.util.Optional;
 
 @Stateless
 @Named("productBean")
@@ -22,9 +21,13 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Optional<Product> addProductToCart(Long productId) {
-        Product product = entityManager.find(Product.class,productId);
-        return Optional.empty();
+    public Product findProductAndAddToCart(Long productId) {
+        Product product =  entityManager.find(Product.class, productId);
+        if (product.getCount() > 0)
+            product.decrementStock();
+        else
+            throw new RuntimeException("Stock is not sufficient");
+        return product;
     }
 
 }
