@@ -12,4 +12,5 @@ public final class ServletPath {
     public static  String ORDERS = "orders.jsp";
     public static final String AUTH_LOGIN = "/auth/login";
     public static final String AUTH_LOGOUT = "/auth/logout";
+    public static final String CART_ADD = "/cart/add";
 }
