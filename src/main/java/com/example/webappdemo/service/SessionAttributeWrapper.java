@@ -3,7 +3,7 @@ package com.example.webappdemo.service;
 import jakarta.servlet.http.HttpSession;
 
 public class SessionAttributeWrapper <T>{
-    private HttpSession session;
+    private final HttpSession session;
 
     public SessionAttributeWrapper(HttpSession session){
         this.session = session;

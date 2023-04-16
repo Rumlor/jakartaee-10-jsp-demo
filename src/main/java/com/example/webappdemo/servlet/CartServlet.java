@@ -7,7 +7,6 @@ import com.example.webappdemo.service.CartSessionService;
 import com.example.webappdemo.service.ProductService;
 import com.example.webappdemo.service.SessionAttributeWrapper;
 import jakarta.ejb.EJB;
-import jakarta.ejb.EJBs;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -15,7 +14,6 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.util.Objects;
-import java.util.Optional;
 
 @WebServlet(name = "cartServlet", urlPatterns = {ServletPath.CART_ADD,ServletPath.CART_DELETE})
 public class CartServlet extends ServletBase{
@@ -23,7 +21,7 @@ public class CartServlet extends ServletBase{
     @EJB
     private ProductService productService;
 
-    private CartSessionService cartSessionService ;
+    private CartSessionService cartSessionService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
@@ -43,8 +41,12 @@ public class CartServlet extends ServletBase{
         cartSessionService.setCartSession(cartSessionObject);
         session.setAttribute("info","Item was successfully removed from the cart.");
         session.removeAttribute("error");
+        finishRequestWithRedirect(resp, req, ServletPath.CART);
+    }
+
+    private void finishRequestWithRedirect(HttpServletResponse resp, HttpServletRequest req, String CART) {
         try {
-            resp.sendRedirect(ServletPath.ROOT + req.getContextPath().concat(ServletPath.CART));
+            resp.sendRedirect(ServletPath.ROOT + req.getContextPath().concat(CART));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -74,11 +76,7 @@ public class CartServlet extends ServletBase{
             session.setAttribute("info","Item was successfully added to cart.");
         else
             session.setAttribute("error","Item could not be added to cart because insufficient stock.");
-        try {
-            resp.sendRedirect(ServletPath.ROOT + req.getContextPath().concat(ServletPath.INDEX));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        finishRequestWithRedirect(resp, req, ServletPath.INDEX);
     }
 
     private boolean addToCart(CartModel cartSessionObject, String productID) {
