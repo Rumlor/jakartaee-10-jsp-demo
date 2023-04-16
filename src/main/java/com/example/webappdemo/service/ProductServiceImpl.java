@@ -26,8 +26,17 @@ public class ProductServiceImpl implements ProductService{
         if (product.getCount() > 0)
             product.decrementStock();
         else
-            throw new RuntimeException("Stock is not sufficient");
+            throw new RuntimeException("Stock is not sufficient for "+product.getName());
         return product;
+    }
+
+    @Override
+    public void findProductAndDeleteFromCart(Integer count, Long productId) {
+        entityManager
+                .createQuery("update Product  p set p.count = p.count+ :count where p.id =:productId", Product.class)
+                .setParameter("productId",productId)
+                .setParameter("count",count)
+                .executeUpdate();
     }
 
 }

@@ -20,7 +20,7 @@ public class LoginServlet extends ServletBase {
     }
 
     private void routeToSpecificService(HttpServletRequest req,HttpServletResponse resp) {
-        String splitPath = req.getRequestURI().split("/auth/")[1];
+        String splitPath = getEndpointFromRequest(req,"/auth/");
         if (splitPath.equals("login"))
             loginService(req,resp);
         else
