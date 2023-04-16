@@ -14,4 +14,5 @@ public final class ServletPath {
     public static final String AUTH_LOGOUT = "/auth/logout";
     public static final String CART_ADD = "/cart/add";
     public static final String CART_DELETE = "/cart/delete";
+    public static final String CART_REMOVE = "/cart/remove";
 }

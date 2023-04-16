@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-@WebServlet(name = "cartServlet", urlPatterns = {ServletPath.CART_ADD,ServletPath.CART_DELETE})
+@WebServlet(name = "cartServlet", urlPatterns = {ServletPath.CART_ADD,ServletPath.CART_DELETE,ServletPath.CART_REMOVE})
 public class CartServlet extends ServletBase{
 
     @EJB
@@ -25,10 +25,40 @@ public class CartServlet extends ServletBase{
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         String endpointFromRequest = getEndpointFromRequest(req,"/cart/");
-        if (endpointFromRequest.equals("add"))
-            cartAdd(req, resp);
-        else if (endpointFromRequest.equals("delete"))
-            cartDelete(req,resp);
+        switch (endpointFromRequest) {
+            case "add":
+                cartAdd(req, resp);
+                break;
+            case "delete":
+                cartDelete(req, resp);
+                break;
+            case "remove":
+                cartRemove(req, resp);
+                break;
+        }
+
+    }
+
+    private void cartRemove(HttpServletRequest req, HttpServletResponse resp) {
+        HttpSession session = req.getSession();
+        CartModel cartSessionObject = cartSessionService.getCartModelFromSessionOrCreateNew();
+        String productID = req.getParameter("id");
+        removeFromCart(cartSessionObject,productID);
+        cartSessionService.setCartSessionAttribute(cartSessionObject);
+        session.setAttribute("info","1 Item was successfully removed from the cart.");
+        session.removeAttribute("error");
+        finishRequestWithRedirect(resp, req, ServletPath.CART);
+    }
+
+    private void removeFromCart(CartModel cartSessionObject, String productID) {
+        ProductModel productModelInCart =  cartSessionObject
+                .getProductModelList().stream()
+                .filter(productModel -> productModel.getProductId().equals(Long.parseLong(productID)))
+                .findFirst().get();
+        productModelInCart.setCount(productModelInCart.getCount()-1);
+        productService.findProductAndDeleteFromCart(1,Long.parseLong(productID));
+        if (productModelInCart.getCount() == 0)
+            cartSessionObject.getProductModelList().remove(productModelInCart);
     }
 
     private void cartDelete(HttpServletRequest req, HttpServletResponse resp) {

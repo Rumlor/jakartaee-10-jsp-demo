@@ -69,9 +69,9 @@
                     <c:out value="\$${item.totalPrice}"/>
                 </td>
                 <td>
-                    <input type="button" value="-" class="button-minus border rounded-circle  icon-shape icon-sm mx-1 " data-field="quantity">
+                    <a class="mx-3 btn btn-primary" href="${pageContext.request.contextPath}/cart/remove?id=${item.productId}">-</a>
                     <input type="text"  class= "amount-input" value="${item.count}">
-                    <input type="button" value="+" class="button-minus border rounded-circle  icon-shape icon-sm mx-1 " data-field="quantity">
+                    <a class="mx-3 btn btn-primary" href="${pageContext.request.contextPath}/cart/addOne?id=${item.productId}">+</a>
                 </td>
                 <td>
                     <a href="${pageContext.request.contextPath}/cart/delete?id=${item.productId}" class="btn btn-close"></a>
@@ -110,4 +110,8 @@
             .map(p->p.getPrice().multiply(BigDecimal.valueOf(p.getCount())))
             .reduce(BigDecimal.ZERO,BigDecimal::add)).orElse(BigDecimal.ZERO);
 }
+%>
+<%
+    request.getSession().removeAttribute("info");
+    request.getSession().removeAttribute("error");
 %>
