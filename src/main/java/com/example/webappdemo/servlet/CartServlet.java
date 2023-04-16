@@ -3,8 +3,8 @@ package com.example.webappdemo.servlet;
 import com.example.webappdemo.entity.Product;
 import com.example.webappdemo.model.CartModel;
 import com.example.webappdemo.model.ProductModel;
-import com.example.webappdemo.service.CartSessionService;
-import com.example.webappdemo.service.ProductService;
+import com.example.webappdemo.beans.CartSessionService;
+import com.example.webappdemo.beans.ProductService;
 import jakarta.ejb.EJB;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -54,7 +54,8 @@ public class CartServlet extends ServletBase{
         ProductModel productModelInCart =  cartSessionObject
                 .getProductModelList().stream()
                 .filter(productModel -> productModel.getProductId().equals(Long.parseLong(productID)))
-                .findFirst().get();
+                .findFirst().orElseThrow(()->new RuntimeException("Product with id " + productID +" could not be found"));
+
         productModelInCart.setCount(productModelInCart.getCount()-1);
         productService.findProductAndDeleteFromCart(1,Long.parseLong(productID));
         if (productModelInCart.getCount() == 0)

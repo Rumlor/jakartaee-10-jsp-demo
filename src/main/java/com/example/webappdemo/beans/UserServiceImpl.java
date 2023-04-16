@@ -1,4 +1,4 @@
-package com.example.webappdemo.service;
+package com.example.webappdemo.beans;
 
 import com.example.webappdemo.entity.User;
 import jakarta.ejb.Stateless;
