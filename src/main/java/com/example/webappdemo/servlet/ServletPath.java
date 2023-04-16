@@ -1,6 +1,5 @@
 package com.example.webappdemo.servlet;
 
-import java.util.Objects;
 
 public final class ServletPath {
     private ServletPath(){}

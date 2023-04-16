@@ -101,7 +101,11 @@ public class CartServlet extends ServletBase{
             session.setAttribute("info","Item was successfully added to cart.");
         else
             session.setAttribute("error","Item could not be added to cart because insufficient stock.");
-        finishRequestWithRedirect(resp, req, ServletPath.INDEX);
+         Boolean inCart = Boolean.parseBoolean(req.getParameter("inCart"));
+         if (!inCart)
+            finishRequestWithRedirect(resp, req, ServletPath.INDEX);
+         else
+             finishRequestWithRedirect(resp,req,ServletPath.CART);
     }
 
     private boolean addToCart( String productID) {

@@ -71,7 +71,7 @@
                 <td>
                     <a class="mx-3 btn btn-primary" href="${pageContext.request.contextPath}/cart/remove?id=${item.productId}">-</a>
                     <input type="text"  class= "amount-input" value="${item.count}">
-                    <a class="mx-3 btn btn-primary" href="${pageContext.request.contextPath}/cart/addOne?id=${item.productId}">+</a>
+                    <a class="mx-3 btn btn-primary" href="${pageContext.request.contextPath}/cart/add?id=${item.productId}&inCart=true">+</a>
                 </td>
                 <td>
                     <a href="${pageContext.request.contextPath}/cart/delete?id=${item.productId}" class="btn btn-close"></a>
