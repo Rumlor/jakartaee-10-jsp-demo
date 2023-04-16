@@ -1,9 +1,9 @@
 package com.example.webappdemo.listener;
 
 import com.example.webappdemo.model.CartModel;
-import com.example.webappdemo.beans.CartSessionService;
-import com.example.webappdemo.beans.ProductService;
-import com.example.webappdemo.beans.SessionAttributeWrapper;
+import com.example.webappdemo.beans.services.CartSessionService;
+import com.example.webappdemo.beans.services.ProductService;
+import com.example.webappdemo.beans.services.SessionAttributeWrapper;
 import jakarta.ejb.EJB;
 import jakarta.servlet.annotation.WebListener;
 import jakarta.servlet.http.HttpSession;

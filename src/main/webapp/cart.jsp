@@ -1,15 +1,7 @@
+<%@ page import="com.example.webappdemo.beans.statefulbeans.CartOperation" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="com.example.webappdemo.model.CartModel" %>
-<%@ page import="java.math.BigDecimal" %>
-<%@ page import="java.util.Optional" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<%
-    if (session.getAttribute("auth") == null){
-        response.sendRedirect(ServletPath.ROOT + request.getContextPath().concat(ServletPath.LOGIN));
-    }
-    CartModel cartModel = (CartModel) session.getAttribute("cart");
-%>
 
 <head>
     <title>Cart</title>
@@ -22,30 +14,33 @@
 <%@include file="included/nav.jsp"%>
 <h1>Cart Page</h1>
 <div class="container">
-    <%
-        String infoAttr = (String) session.getAttribute("info");
-        String errorAttr = (String) session.getAttribute("error");
-        if ( infoAttr != null && !infoAttr.isEmpty()) {
-    %>
-
-    <div class="alert alert-info alert-dismissible fade show" role="alert">
-        <strong><%=infoAttr%></strong>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
 
     <%
+        if (session.getAttribute("auth") == null){
+           response.sendRedirect(ServletPath.LOGIN);
         }
-        if(errorAttr != null && !errorAttr.isEmpty()){
+
+        CartOperation cartBean = (CartOperation) session.getAttribute("cartBean");
+        session.setAttribute("cartBean",cartBean);
+
     %>
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <strong><%=errorAttr%></strong>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    <%
-        }
-    %>
+
+    <c:if test="${cartBean.hasInfo}">
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <strong><c:out value="${cartBean.info}"/></strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </c:if>
+
+    <c:if test="${cartBean.hasError}">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong><c:out value="${cartBean.error}"/></strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </c:if>
+
     <div class="d-flex py-3">
-        <h3>Total Price: $<%=getPrice(cartModel)%></h3>
+        <h3>Total Price: $<c:out value="${cartBean.cart.totalPrice}"/></h3>
         <a class="mx-3 btn btn-primary" href="#">Check Out</a>
 </div>
 
@@ -61,7 +56,7 @@
     </thead>
     <tbody>
 
-        <c:forEach items="${cart.productModelList}" var="item">
+        <c:forEach items="${cartBean.products}" var="item">
             <tr>
                 <td><c:out value="${item.name}"/></td>
                 <td><c:out value="${item.category}"/></td>
@@ -78,9 +73,15 @@
                 </td>
             </tr>
         </c:forEach>
-
+        <%
+            if (cartBean != null) {
+                cartBean.setInfo(null);
+                cartBean.setError(null);
+            }
+        %>
     </tbody>
 </table>
+
 
 </div>
 </body>
@@ -103,15 +104,3 @@
     }
 </script>
 </html>
-<%! private static BigDecimal getPrice(CartModel cartModel) {
-    return Optional.ofNullable(cartModel)
-            .map(cart->
-            cart.getProductModelList().stream()
-            .map(p->p.getPrice().multiply(BigDecimal.valueOf(p.getCount())))
-            .reduce(BigDecimal.ZERO,BigDecimal::add)).orElse(BigDecimal.ZERO);
-}
-%>
-<%
-    request.getSession().removeAttribute("info");
-    request.getSession().removeAttribute("error");
-%>

@@ -1,4 +1,4 @@
-package com.example.webappdemo.beans;
+package com.example.webappdemo.beans.services;
 
 import jakarta.servlet.http.HttpSession;
 

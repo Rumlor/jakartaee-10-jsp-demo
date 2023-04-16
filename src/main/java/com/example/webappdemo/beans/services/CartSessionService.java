@@ -1,4 +1,4 @@
-package com.example.webappdemo.beans;
+package com.example.webappdemo.beans.services;
 
 import com.example.webappdemo.model.CartModel;
 import com.example.webappdemo.model.ProductModel;

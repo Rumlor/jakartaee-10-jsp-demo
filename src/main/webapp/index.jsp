@@ -1,4 +1,5 @@
-
+<%@ page import="com.example.webappdemo.model.CartModel" %>
+<%@ page import="com.example.webappdemo.beans.statefulbeans.CartOperation" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
@@ -10,30 +11,31 @@
     <script src="js/bootstrap.min.js"></script>
 </head>
 <body>
+
 <%@include file="included/nav.jsp"%>
+
+    <%
+        CartOperation cartBean = (CartOperation) session.getAttribute("cartBean");
+        session.setAttribute("cartBean",cartBean);
+    %>
+
     <div class="container">
-        <%
-            String infoAttr = (String) session.getAttribute("info");
-            String errorAttr = (String) session.getAttribute("error");
-            if ( infoAttr != null && !infoAttr.isEmpty()) {
-        %>
+        <c:if test="${cartBean != null}">
+                <c:if test="${cartBean.hasInfo}" >
+                    <div class="alert alert-info alert-dismissible fade show" role="alert">
+                        <strong><c:out value="${cartBean.info}"/></strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </c:if>
 
-        <div class="alert alert-info alert-dismissible fade show" role="alert">
-            <strong><%=infoAttr%></strong>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
+                <c:if test="${cartBean.hasError}">
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong><c:out value="${cartBean.error}"/></strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </c:if>
+        </c:if>
 
-        <%
-            }
-            if(errorAttr != null && !errorAttr.isEmpty()){
-        %>
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <strong><%=errorAttr%></strong>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        <%
-            }
-        %>
         <div class="card-header my-3">All Products</div>
         <div class="row">
                 <c:forEach items="${productBean.allProducts}" var="product">
@@ -59,10 +61,13 @@
                     </div>
                 </c:forEach>
             </div>
-        <%
-            session.removeAttribute("error");
-            session.removeAttribute("info");
-        %>
+
     </div>
+<%
+    if (cartBean != null) {
+        cartBean.setInfo(null);
+        cartBean.setError(null);
+    }
+%>
 </body>
 </html>
