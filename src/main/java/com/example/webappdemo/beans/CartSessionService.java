@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Stateless
 public class CartSessionService implements Serializable {
-    private String cartSessionAttr = "cart";
+    private final String cartSessionAttr = "cart";
     private SessionAttributeWrapper<CartModel> cartModelSessionAttributeWrapper;
 
 
