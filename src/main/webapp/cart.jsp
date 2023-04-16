@@ -1,22 +1,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.example.webappdemo.model.CartModel" %>
 <%@ page import="java.math.BigDecimal" %>
-<%@ page import="com.example.webappdemo.model.ProductModel" %>
-<%@ page import="java.util.Optional" %><%--
-  Created by IntelliJ IDEA.
-  User: 201540
-  Date: 4/11/2023
-  Time: 10:03 PM
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="java.util.Optional" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <%
     if (session.getAttribute("auth") == null){
         response.sendRedirect(ServletPath.ROOT + request.getContextPath().concat(ServletPath.LOGIN));
     }
-    CartModel cartModel = (CartModel)session.getAttribute("cart");
-    session.setAttribute("cart",cartModel);
+    CartModel cartModel = (CartModel) session.getAttribute("cart");
 %>
 
 <head>

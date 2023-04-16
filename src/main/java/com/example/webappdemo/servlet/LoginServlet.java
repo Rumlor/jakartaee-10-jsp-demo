@@ -28,6 +28,7 @@ public class LoginServlet extends ServletBase {
     }
 
     private void loginService(HttpServletRequest req, HttpServletResponse resp) {
+        req.getSession().setMaxInactiveInterval(120);
         var username = req.getParameter("username");
         var pass = req.getParameter("password");
         User user = userDaoService.runQuery(username,pass);
@@ -47,9 +48,7 @@ public class LoginServlet extends ServletBase {
     }
 
     private void logoutService(HttpServletRequest req, HttpServletResponse resp) {
-        if (req.getSession().getAttribute("auth") != null){
-            req.getSession().removeAttribute("auth");
-        }
+        req.getSession().invalidate();
         try {
             resp.sendRedirect(ServletPath.ROOT + req.getContextPath().concat(ServletPath.LOGIN));
         } catch (IOException e) {
