@@ -4,12 +4,12 @@ import com.example.webappdemo.model.CartModel;
 import com.example.webappdemo.model.ProductModel;
 import jakarta.ejb.Stateful;
 import jakarta.enterprise.context.SessionScoped;
-import jakarta.inject.Named;
 
 import java.io.Serializable;
 import java.util.List;
 
-@Stateful(mappedName = "cartBeab")
+@Stateful
+@SessionScoped
 public class CartBean implements  CartOperation, Serializable {
 
     private final CartModel cart;
