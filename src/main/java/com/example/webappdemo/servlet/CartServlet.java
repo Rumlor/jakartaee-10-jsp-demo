@@ -5,6 +5,7 @@ import com.example.webappdemo.beans.statefulbeans.CartOperation;
 import com.example.webappdemo.entity.Product;
 import com.example.webappdemo.model.ProductModel;
 import jakarta.ejb.EJB;
+import jakarta.inject.Inject;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,7 +18,7 @@ public class CartServlet extends ServletBase{
     @EJB
     private ProductService productService;
 
-    @EJB
+    @Inject
     private CartOperation cartOperationBean;
 
 

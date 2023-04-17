@@ -1,21 +1,26 @@
 package com.example.webappdemo.beans.statefulbeans;
 
+import com.example.webappdemo.beans.services.ProductService;
 import com.example.webappdemo.model.CartModel;
 import com.example.webappdemo.model.ProductModel;
-import jakarta.ejb.Stateful;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
+import jakarta.ejb.EJB;
 import jakarta.enterprise.context.SessionScoped;
+import jakarta.inject.Named;
 
 import java.io.Serializable;
 import java.util.List;
 
-@Stateful
+@Named
 @SessionScoped
-public class CartBean implements  CartOperation, Serializable {
+public class CartBean implements  CartOperation, Serializable,BeanLifeCycle {
 
     private final CartModel cart;
     private String cartInfoMessage;
     private String cartErrorMessage;
-
+    @EJB
+    private ProductService productService;
 
     public CartBean(){
         cart = CartModel.builder().build();
@@ -75,5 +80,18 @@ public class CartBean implements  CartOperation, Serializable {
     @Override
     public boolean getHasError() {
         return this.cartErrorMessage != null && !this.cartErrorMessage.isEmpty();
+    }
+
+    @PostConstruct
+    public void constructed() {
+        System.out.println("constructed");
+    }
+
+    @PreDestroy
+    public void destroyed() {
+        getProducts().stream()
+                .forEach(productModel ->
+                        productService
+                                .findProductAndDeleteFromCart(productModel.getCount(), productModel.getProductId()));
     }
 }
