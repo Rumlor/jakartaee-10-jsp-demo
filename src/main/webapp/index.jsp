@@ -1,5 +1,3 @@
-<%@ page import="com.example.webappdemo.model.CartModel" %>
-<%@ page import="com.example.webappdemo.beans.statefulbeans.CartOperation" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
@@ -14,10 +12,7 @@
 
 <%@include file="included/nav.jsp"%>
 
-    <%
-        CartOperation cartBean = (CartOperation) session.getAttribute("cartBean");
-        session.setAttribute("cartBean",cartBean);
-    %>
+
 
     <div class="container">
         <c:if test="${cartBean != null}">
@@ -63,11 +58,6 @@
             </div>
 
     </div>
-<%
-    if (cartBean != null) {
-        cartBean.setInfo(null);
-        cartBean.setError(null);
-    }
-%>
+
 </body>
 </html>

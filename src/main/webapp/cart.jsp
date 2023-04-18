@@ -15,15 +15,6 @@
 <h1>Cart Page</h1>
 <div class="container">
 
-    <%
-        if (session.getAttribute("auth") == null){
-           response.sendRedirect(ServletPath.LOGIN);
-        }
-
-        CartOperation cartBean = (CartOperation) session.getAttribute("cartBean");
-        session.setAttribute("cartBean",cartBean);
-
-    %>
 
     <c:if test="${cartBean.hasInfo}">
         <div class="alert alert-info alert-dismissible fade show" role="alert">
@@ -73,12 +64,7 @@
                 </td>
             </tr>
         </c:forEach>
-        <%
-            if (cartBean != null) {
-                cartBean.setInfo(null);
-                cartBean.setError(null);
-            }
-        %>
+
     </tbody>
 </table>
 
