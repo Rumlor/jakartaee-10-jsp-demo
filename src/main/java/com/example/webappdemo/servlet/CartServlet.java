@@ -45,7 +45,6 @@ public class CartServlet extends ServletBase{
         String productID = req.getParameter("id");
         removeFromCart(productID);
         cartOperationBean.setInfo("1 item was successfully removed from the cart");
-        req.getSession().setAttribute("cartBean",cartOperationBean);
         finishRequestWithRedirect(resp, req, ServletPath.CART);
     }
 
@@ -65,7 +64,6 @@ public class CartServlet extends ServletBase{
         deleteFromCart(productID);
         cartOperationBean.setInfo("Item was successfully removed from the cart.");
         cartOperationBean.setError(null);
-        req.getSession().setAttribute("cartBean",cartOperationBean);
         finishRequestWithRedirect(resp, req, ServletPath.CART);
     }
 
@@ -97,7 +95,6 @@ public class CartServlet extends ServletBase{
             cartOperationBean.setError("Item could not be added to cart because insufficient stock.");
 
          boolean inCart = Boolean.parseBoolean(req.getParameter("inCart"));
-         req.getSession().setAttribute("cartBean",cartOperationBean);
          if (!inCart)
             finishRequestWithRedirect(resp, req, ServletPath.INDEX);
          else

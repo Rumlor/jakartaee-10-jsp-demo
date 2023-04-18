@@ -42,15 +42,14 @@
                                 <h6>Price: $<c:out value="${product.price}"/></h6>
                                 <h6>Category: <c:out value="${product.category}"/></h6>
                                 <h6>Stock: <c:out value="${product.count}"/></h6>
-                                <%
-                                    if (session.getAttribute("auth") != null){
-                                %>
+
+                            <c:if test="${pageContext.request.session.getAttribute('auth') != null}">
                                 <div class="mt-3 d-flex justify-content-between">
                                     <a href=<%=request.getServletContext().getContextPath().concat(ServletPath.CART_ADD).concat("?id=")%>${product.id} class="btn btn-dark ">Add To Cart</a>
                                     <a href="#" class="btn btn-primary ">Buy Now</a>
                                 </div>
-                                <% }
-                                %>
+                            </c:if>
+
                             </div>
                         </div>
                     </div>

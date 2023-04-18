@@ -87,7 +87,7 @@ public class CartBean implements  CartOperation, Serializable,BeanLifeCycle {
 
     @PostConstruct
     public void constructed() {
-        System.out.println("constructed");
+
     }
 
     @PreDestroy
