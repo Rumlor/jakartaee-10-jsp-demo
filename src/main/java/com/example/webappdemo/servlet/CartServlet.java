@@ -4,7 +4,6 @@ import com.example.webappdemo.beans.services.ProductService;
 import com.example.webappdemo.beans.statefulbeans.CartOperation;
 import com.example.webappdemo.entity.Product;
 import com.example.webappdemo.model.ProductModel;
-import jakarta.ejb.EJB;
 import jakarta.inject.Inject;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,12 +13,15 @@ import java.io.IOException;
 
 @WebServlet(name = "cartServlet", urlPatterns = {ServletPath.CART_ADD,ServletPath.CART_DELETE,ServletPath.CART_REMOVE})
 public class CartServlet extends ServletBase{
+    private final ProductService productServiceBean;
 
-    @EJB
-    private ProductService productService;
+    private final CartOperation cartOperationBean;
 
     @Inject
-    private CartOperation cartOperationBean;
+    public CartServlet(ProductService productServiceBean, CartOperation cartOperationBean) {
+        this.productServiceBean = productServiceBean;
+        this.cartOperationBean = cartOperationBean;
+    }
 
 
     @Override
@@ -53,7 +55,7 @@ public class CartServlet extends ServletBase{
                 .findFirst().orElseThrow(()->new RuntimeException("Product with id " + productID +" could not be found"));
 
         productModelInCart.setCount(productModelInCart.getCount()-1);
-        productService.findProductAndDeleteFromCart(1,Long.parseLong(productID));
+        productServiceBean.findProductAndDeleteFromCart(1,Long.parseLong(productID));
         if (productModelInCart.getCount() == 0)
             cartOperationBean.removeProductFromCart(productModelInCart);
     }
@@ -81,7 +83,7 @@ public class CartServlet extends ServletBase{
         ProductModel productModelInCart =  cartOperationBean.getProducts().stream()
                                         .filter(productModel -> productModel.getProductId().equals(Long.parseLong(productID)))
                                         .findFirst().get();
-        productService.findProductAndDeleteFromCart(productModelInCart.getCount(),Long.parseLong(productID));
+        productServiceBean.findProductAndDeleteFromCart(productModelInCart.getCount(),Long.parseLong(productID));
         cartOperationBean.removeProductFromCart(productModelInCart);
     }
 
@@ -113,7 +115,7 @@ public class CartServlet extends ServletBase{
     }
 
     private  void addProductToCart(String productID) {
-        Product product = productService.findProductAndAddToCart(Long.parseLong(productID));
+        Product product = productServiceBean.findProductAndAddToCart(Long.parseLong(productID));
 
         ProductModel productModel = ProductModel.builder()
                                 .price(product.getPrice())

@@ -2,13 +2,15 @@ package com.example.webappdemo.beans.services;
 
 import com.example.webappdemo.entity.Product;
 import jakarta.ejb.Stateless;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Named;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 
 import java.util.List;
 
-@Stateless
+@ApplicationScoped
 @Named("productBean")
 public class ProductServiceImpl implements ProductService{
 
@@ -21,6 +23,7 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
+    @Transactional
     public Product findProductAndAddToCart(Long productId) {
         Product product =  entityManager.find(Product.class, productId);
         if (product.getCount() > 0)
@@ -31,6 +34,7 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
+    @Transactional
     public void findProductAndDeleteFromCart(Integer count, Long productId) {
         entityManager
                 .createQuery("update Product  p set p.count = p.count+ :count where p.id =:productId", Product.class)

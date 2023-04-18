@@ -5,24 +5,27 @@ import com.example.webappdemo.model.CartModel;
 import com.example.webappdemo.model.ProductModel;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
-import jakarta.ejb.EJB;
 import jakarta.enterprise.context.SessionScoped;
+import jakarta.inject.Inject;
 import jakarta.inject.Named;
 
 import java.io.Serializable;
 import java.util.List;
 
-@Named
+
 @SessionScoped
+@Named("cartBean")
 public class CartBean implements  CartOperation, Serializable,BeanLifeCycle {
 
     private final CartModel cart;
     private String cartInfoMessage;
     private String cartErrorMessage;
-    @EJB
-    private ProductService productService;
 
-    public CartBean(){
+    private final ProductService productService;
+
+    @Inject
+    public CartBean(ProductService productService){
+        this.productService = productService;
         cart = CartModel.builder().build();
     }
 
