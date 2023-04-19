@@ -1,4 +1,4 @@
-package com.example.webappdemo.service;
+package com.example.webappdemo.beans.services;
 
 import com.example.webappdemo.entity.Product;
 
@@ -9,4 +9,5 @@ public interface ProductService {
     List<Product> getAllProducts();
     Product findProductAndAddToCart(Long productId);
     void findProductAndDeleteFromCart(Integer count, Long productId);
+    Product findProductAndChangeFromCart(Integer count, Long productId);
 }

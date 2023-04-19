@@ -1,4 +1,4 @@
-package com.example.webappdemo.service;
+package com.example.webappdemo.beans.services;
 
 import com.example.webappdemo.model.CartModel;
 import com.example.webappdemo.model.ProductModel;
@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Stateless
 public class CartSessionService implements Serializable {
-    private String cartSessionAttr = "cart";
+    private final String cartSessionAttr = "cart";
     private SessionAttributeWrapper<CartModel> cartModelSessionAttributeWrapper;
 
 

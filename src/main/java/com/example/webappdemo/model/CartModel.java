@@ -30,5 +30,6 @@ public class CartModel implements Serializable {
             this.productModelList.add(productModel);
         }
     }
+
 }
 

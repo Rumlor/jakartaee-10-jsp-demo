@@ -1,7 +1,7 @@
 package com.example.webappdemo.servlet;
 
 import com.example.webappdemo.entity.User;
-import com.example.webappdemo.service.UserService;
+import com.example.webappdemo.beans.services.UserService;
 import jakarta.ejb.EJB;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
