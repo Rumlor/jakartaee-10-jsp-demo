@@ -66,6 +66,12 @@ public class CartBean implements  CartOperation, Serializable,BeanLifeCycle {
     }
 
     @Override
+    public void resetInfoAndError() {
+        this.setError(null);
+        this.setInfo(null);
+    }
+
+    @Override
     public String getError() {
         return this.cartErrorMessage;
     }

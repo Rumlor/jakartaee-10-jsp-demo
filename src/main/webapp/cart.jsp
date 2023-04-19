@@ -63,7 +63,7 @@
                 </td>
             </tr>
         </c:forEach>
-
+        <c:out value="${cartBean.resetInfoAndError()}"/>
     </tbody>
 </table>
 

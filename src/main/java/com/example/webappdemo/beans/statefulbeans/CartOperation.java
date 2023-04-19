@@ -13,6 +13,7 @@ public interface CartOperation {
     List<ProductModel> getProducts();
     void setError(String msg);
     void setInfo(String msg);
+    void resetInfoAndError();
     String getError();
     String getInfo();
     boolean getHasInfo();
