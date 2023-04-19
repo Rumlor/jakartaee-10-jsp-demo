@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -32,10 +31,5 @@ public class CartModel implements Serializable {
         }
     }
 
-    public BigDecimal getTotalPrice(){
-       return getProductModelList().stream()
-                        .map(p->p.getPrice().multiply(BigDecimal.valueOf(p.getCount())))
-                        .reduce(BigDecimal.ZERO,BigDecimal::add);
-    }
 }
 

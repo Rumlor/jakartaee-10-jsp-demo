@@ -10,6 +10,7 @@ import jakarta.inject.Inject;
 import jakarta.inject.Named;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 
@@ -41,8 +42,18 @@ public class CartBean implements  CartOperation, Serializable,BeanLifeCycle {
     }
 
     @Override
+    public BigDecimal getCartTotalPrice() {
+        return cart.getProductModelList().stream()
+                .map(p->p.getPrice().multiply(BigDecimal.valueOf(p.getCount())))
+                .reduce(BigDecimal.ZERO,BigDecimal::add);
+    }
+
+    @Override
     public void emptyCart() {
-        cart.getProductModelList().clear();
+        getProducts()
+                .forEach(productModel ->
+                        productService
+                                .findProductAndDeleteFromCart(productModel.getCount(), productModel.getProductId()));
     }
 
     @Override
@@ -98,9 +109,6 @@ public class CartBean implements  CartOperation, Serializable,BeanLifeCycle {
 
     @PreDestroy
     public void destroyed() {
-        getProducts().stream()
-                .forEach(productModel ->
-                        productService
-                                .findProductAndDeleteFromCart(productModel.getCount(), productModel.getProductId()));
+        this.emptyCart();
     }
 }

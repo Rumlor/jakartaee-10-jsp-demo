@@ -3,11 +3,13 @@ package com.example.webappdemo.beans.statefulbeans;
 import com.example.webappdemo.model.CartModel;
 import com.example.webappdemo.model.ProductModel;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface CartOperation {
     void addProductToCart(ProductModel productModel);
     void removeProductFromCart(ProductModel productModel);
+    BigDecimal getCartTotalPrice();
     void emptyCart();
     CartModel getCart();
     List<ProductModel> getProducts();

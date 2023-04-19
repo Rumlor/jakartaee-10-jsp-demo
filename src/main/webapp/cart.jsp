@@ -30,7 +30,7 @@
     </c:if>
 
     <div class="d-flex py-3">
-        <h3>Total Price: $<c:out value="${cartBean.cart.totalPrice}"/></h3>
+        <h3>Total Price: $<c:out value="${cartBean.cartTotalPrice}"/></h3>
         <a class="mx-3 btn btn-primary" href="#">Check Out</a>
 </div>
 
@@ -50,12 +50,10 @@
             <tr>
                 <td><c:out value="${item.name}"/></td>
                 <td><c:out value="${item.category}"/></td>
-                <td>
-                    <c:out value="\$${item.totalPrice}"/>
-                </td>
+                <td><c:out value="\$${item.totalPrice}"/></td>
                 <td>
                     <a class="mx-3 btn btn-primary" href="${pageContext.request.contextPath}/cart/remove?id=${item.productId}">-</a>
-                    <input type="text"  class= "amount-input" value="${item.count}">
+                    <input type="text"  class= "amount-input" value="${item.count}"/>
                     <a class="mx-3 btn btn-primary" href="${pageContext.request.contextPath}/cart/add?id=${item.productId}&inCart=true">+</a>
                 </td>
                 <td>
