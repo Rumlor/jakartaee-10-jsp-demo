@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet(name = "cartServlet", urlPatterns = {ServletPath.CART_ADD,ServletPath.CART_DELETE,ServletPath.CART_REMOVE})
+@WebServlet(name = "cartServlet", urlPatterns = {ServletPath.CART_ADD,ServletPath.CART_DELETE,ServletPath.CART_REMOVE,ServletPath.CART_SET})
 public class CartServlet extends ServletBase{
     private final ProductService productServiceBean;
 
@@ -23,9 +23,8 @@ public class CartServlet extends ServletBase{
         this.cartOperationBean = cartOperationBean;
     }
 
-
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
+    protected void service(HttpServletRequest req, HttpServletResponse resp) {
         String endpointFromRequest = getEndpointFromRequest(req,"/cart/");
         switch (endpointFromRequest) {
             case "add":
@@ -37,7 +36,45 @@ public class CartServlet extends ServletBase{
             case "remove":
                 cartRemove(req, resp);
                 break;
+            case "set":
+                cartSet(req,resp);
+                break;
         }
+
+    }
+
+    private void cartSet(HttpServletRequest req, HttpServletResponse resp) {
+        String productID = req.getParameter("id");
+        String count = req.getParameter("count");
+        boolean successful = true;
+        Integer setCount = 0;
+        try {
+            setCount =  setToCart(productID,count);
+        }catch (Exception e){
+            successful = false;
+        }
+        if (successful) {
+            if (setCount > 0)
+                cartOperationBean.setInfo(setCount + " item was successfully added to the cart.");
+            else
+                cartOperationBean.setInfo((-setCount) + " item was successfully removed from the cart.");
+
+        }
+        else
+            cartOperationBean.setError("Item could not be added to cart because insufficient stock.");
+
+        finishRequestWithRedirect(resp, req, ServletPath.CART);
+    }
+
+    private Integer setToCart(String productID, String count) {
+        Long productId = Long.parseLong(productID);
+        Integer productCount = Integer.parseInt(count);
+        ProductModel productInCart =  cartOperationBean.getProducts().stream().filter(p->p.getProductId().equals(productId)).findFirst().orElseThrow(()-> new RuntimeException("No product with id "+productID+" was found in cart"));
+        Integer changeInCount = productCount - productInCart.getCount();
+        Product product = productServiceBean.findProductAndChangeFromCart(changeInCount,productId);
+        ProductModel newProductModel =  ProductModel.builder().productId(productId).count(productCount).price(product.getPrice()).name(product.getName()).category(product.getCategory()).build();
+        cartOperationBean.setProductToCart(newProductModel);
+        return changeInCount;
 
     }
 

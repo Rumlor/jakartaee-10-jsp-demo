@@ -9,4 +9,5 @@ public interface ProductService {
     List<Product> getAllProducts();
     Product findProductAndAddToCart(Long productId);
     void findProductAndDeleteFromCart(Integer count, Long productId);
+    Product findProductAndChangeFromCart(Integer count, Long productId);
 }

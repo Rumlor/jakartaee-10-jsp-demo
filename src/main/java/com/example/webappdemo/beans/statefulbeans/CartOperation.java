@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface CartOperation {
     void addProductToCart(ProductModel productModel);
+    void setProductToCart(ProductModel product);
     void removeProductFromCart(ProductModel productModel);
     BigDecimal getCartTotalPrice();
     void emptyCart();

@@ -52,9 +52,12 @@
                 <td><c:out value="${item.category}"/></td>
                 <td><c:out value="\$${item.totalPrice}"/></td>
                 <td>
+                    <form action="/cart/set" method="post">
                     <a class="mx-3 btn btn-primary" href="${pageContext.request.contextPath}/cart/remove?id=${item.productId}">-</a>
-                    <input type="text"  class= "amount-input" value="${item.count}"/>
+                        <input type="hidden" name="id" value="${item.productId}">
+                        <input type="text" name="count" class= "amount-input" value="${item.count}"/>
                     <a class="mx-3 btn btn-primary" href="${pageContext.request.contextPath}/cart/add?id=${item.productId}&inCart=true">+</a>
+                    </form>
                 </td>
                 <td>
                     <a href="${pageContext.request.contextPath}/cart/delete?id=${item.productId}" class="btn btn-close"></a>

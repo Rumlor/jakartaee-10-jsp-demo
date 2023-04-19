@@ -11,7 +11,9 @@ import jakarta.inject.Named;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @SessionScoped
@@ -34,6 +36,14 @@ public class CartBean implements  CartOperation, Serializable,BeanLifeCycle {
     @Override
     public void addProductToCart(ProductModel productModel) {
         cart.addToCart(productModel);
+    }
+
+    @Override
+    public void setProductToCart(ProductModel product) {
+        cart.setProductModelList(cart.getProductModelList().stream().filter(p->!p.getProductId().equals(product.getProductId())).collect(Collectors.toList()));
+        if(product.getCount() > 0)
+            cart.getProductModelList().add(product);
+        cart.getProductModelList().sort(Comparator.comparing(ProductModel::getName));
     }
 
     @Override

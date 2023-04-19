@@ -20,7 +20,7 @@ public class Product implements Serializable {
     private String imagePath;
     private BigDecimal price;
     private Integer count;
-    public void decrementStock(){
-        count--;
+    public void decrementStock(Integer count){
+        this.count-=count;
     }
 }

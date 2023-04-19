@@ -27,7 +27,7 @@ public class ProductServiceImpl implements ProductService{
     public Product findProductAndAddToCart(Long productId) {
         Product product =  entityManager.find(Product.class, productId);
         if (product.getCount() > 0)
-            product.decrementStock();
+            product.decrementStock(1);
         else
             throw new RuntimeException("Stock is not sufficient for "+product.getName());
         return product;
@@ -41,6 +41,16 @@ public class ProductServiceImpl implements ProductService{
                 .setParameter("productId",productId)
                 .setParameter("count",count)
                 .executeUpdate();
+    }
+
+    @Override
+    @Transactional
+    public Product findProductAndChangeFromCart(Integer count, Long productId) {
+        Product product =  entityManager.find(Product.class, productId);
+        if ((product.getCount()-count) > 0 ){
+            product.decrementStock(count);
+        }
+        return product;
     }
 
 }
